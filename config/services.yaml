@@ -13,7 +13,14 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    # App\:
+    #     resource: '../src/'
+    #     exclude:
+    #         - '../src/DependencyInjection/'
+    #         - '../src/Entity/'
+    #         - '../src/Kernel.php'
+
+    Fulll\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
@@ -22,3 +29,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Register the command explicitly as a service
+    Fulll\Infra\Console\RegisterVehiculeConsoleCommand:
+        arguments:
+            $registerVehiculeService: '@Fulll\App\Services\RegisterVehiculeService'
+
