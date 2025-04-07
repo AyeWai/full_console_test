@@ -15,8 +15,8 @@ final class SqLiteVehicleRegistrationStatusRepository implements VehicleRegistra
 
             $db = new \SQLite3($_ENV['DB_PATH']);
 
-            $pre_result = $db->prepare('SELECT * FROM vehicle_registration_status WHERE vehicle_id = ? AND associated_fleet = ? AND registration_status = "REGISTERED"');
-            $pre_result->bindValue(1, $vehicle->getId(), SQLITE3_INTEGER);
+            $pre_result = $db->prepare('SELECT * FROM vehicle_registration_status WHERE plate_number = ? AND associated_fleet = ? AND registration_status = "REGISTERED"');
+            $pre_result->bindValue(1, $vehicle->getPlateNumber(), SQLITE3_TEXT);
             $pre_result->bindValue(2, $fleet_id, SQLITE3_INTEGER);
 
             $result = $pre_result->execute();

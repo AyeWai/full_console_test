@@ -8,39 +8,56 @@ if ($database) {
     $database->exec('PRAGMA foreign_keys = ON');
 
     $createFleetTableQuery = "CREATE TABLE IF NOT EXISTS fleets (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(45)
     )";
 
     $createLocationTableQuery = "CREATE TABLE IF NOT EXISTS locations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        gpsCoordinates VARCHAR(20) NOT NULL
+        gps_coordinates VARCHAR(50) NOT NULL,
+        alt VARCHAR(50)
     )";
 
-    $createVehiculeTableQuery = "CREATE TABLE IF NOT EXISTS vehicules (
-        id INTEGER PRIMARY KEY,
-        location_id INTEGER,
-        FOREIGN KEY (location_id) REFERENCES locations(id)
+    $createVehicleTableQuery = "CREATE TABLE IF NOT EXISTS vehicles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        plate_number VARCHAR(50) UNIQUE
     )";
 
-    $createFleetVehiculeTableQuery = "CREATE TABLE IF NOT EXISTS fleets_vehicules (
+    $createFleetVehicleTableQuery = "CREATE TABLE IF NOT EXISTS fleets_vehicles (
         fleet_id INTEGER NOT NULL,
-        vehicule_id INTEGER NOT NULL,
-        PRIMARY KEY (vehicule_id, fleet_id),
-        FOREIGN KEY (vehicule_id) REFERENCES vehicules(id) ON DELETE CASCADE
+        vehicle_id INTEGER NOT NULL,
+        PRIMARY KEY (vehicle_id, fleet_id),
+        FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE
         FOREIGN KEY (fleet_id) REFERENCES fleets(id) ON DELETE CASCADE
     )";
 
-    $createVehiculeRegistrationStatusViewQuery = "CREATE VIEW vehicule_registration_status AS
+    $createVehicleLocationTableQuery = "CREATE TABLE IF NOT EXISTS vehicles_locations (
+        vehicle_id INTEGER NOT NULL,
+        location_id INTEGER NOT NULL,
+        PRIMARY KEY(vehicle_id),
+        FOREIGN KEY(vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE,
+        FOREIGN KEY(location_id) REFERENCES locations(id) ON DELETE CASCADE
+    )";
+
+    $createVehicleRegistrationStatusViewQuery = "CREATE VIEW vehicle_registration_status AS
         SELECT 
-            v.id AS vehicule_id,
+            v.plate_number AS plate_number,
             CASE 
                 WHEN f.fleet_id IS NULL THEN 'UNREGISTERED'
                 ELSE 'REGISTERED'
             END AS registration_status,
             f.fleet_id AS associated_fleet
-        FROM vehicules v
-        LEFT JOIN fleets_vehicules f ON f.vehicule_id = v.id";
+        FROM vehicles v
+        LEFT JOIN fleets_vehicles f ON f.vehicle_id = v.id";
+        
+    $createVehicleLocationViewQuery = "CREATE VIEW IF NOT EXISTS vehicle_location_view AS
+        SELECT 
+            v.plate_number,
+            l.gps_coordinates,
+            l.alt
+        FROM vehicles v
+        JOIN vehicles_locations vl ON v.id = vl.vehicle_id
+        JOIN locations l ON vl.location_id = l.id";
 
     try {
         $database->exec($createFleetTableQuery);
@@ -57,24 +74,38 @@ if ($database) {
     }
 
     try {
-        $database->exec($createVehiculeTableQuery);
-        echo "Vehicule table created successfully!\n";
+        $database->exec($createVehicleTableQuery);
+        echo "Vehicle table created successfully!\n";
     } catch (Error $e) {
-        echo "Error creating vehicule table: " . $e->getMessage() . "\n";
+        echo "Error creating vehicle table: " . $e->getMessage() . "\n";
     }
 
     try {
-        $database->exec($createFleetVehiculeTableQuery);
-        echo "Fleet vehicule table created successfully!\n";
+        $database->exec($createFleetVehicleTableQuery);
+        echo "Fleet vehicle table created successfully!\n";
     } catch (Error $e) {
-        echo "Error creating fleet vehicule table: " . $e->getMessage() . "\n";
+        echo "Error creating fleet vehicle table: " . $e->getMessage() . "\n";
     }
 
     try {
-        $database->exec($createVehiculeRegistrationStatusViewQuery);
-        echo "Vehicule registration status view created successfully!\n";
+        $database->exec($createVehicleLocationTableQuery);
+        echo "Vehicle location table created successfully!\n";
     } catch (Error $e) {
-        echo "Error creating vehicule registration status view: " . $e->getMessage() . "\n";
+        echo "Error creating Vehicle location table: " . $e->getMessage() . "\n";
+    }
+
+    try {
+        $database->exec($createVehicleRegistrationStatusViewQuery);
+        echo "Vehicle registration status view created successfully!\n";
+    } catch (Error $e) {
+        echo "Error creating vehicle registration status view: " . $e->getMessage() . "\n";
+    }
+
+    try {
+        $database->exec($createVehicleLocationViewQuery);
+        echo "Vehicle location view created successfully!\n";
+    } catch (Error $e) {
+        echo "Error creating vehicle location view: " . $e->getMessage() . "\n";
     }
 } else {
     echo "Failed to connect to the database.\n";

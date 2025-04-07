@@ -14,10 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'fulll:localize-vehicle',
-    description: 'Park a vehicle',
+    name: 'fulll:register-vehicle',
+    description: 'Registers a vehicle to a fleet',
 )]
-final class LocalizeVehicleConsoleCommand extends Command
+final class RegisterVehicleConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehicleService $registerVehicleService,
@@ -36,8 +36,8 @@ final class LocalizeVehicleConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fleetId = (int) $input->getArgument('fleetId');
-        $vehiclePlateNumber = (int) $input->getArgument('vehiclePlateNumber');
-        $vehicle = new Vehicle($vehiclePlateNumber);
+        $vehiclePlateNumber = (string) $input->getArgument('vehiclePlateNumber');
+        $vehicle = new Vehicle(id: null , plate_number : $vehiclePlateNumber);
 
         try {
             $this->registerVehicleService->registerVehicle($vehicle, $fleetId);

@@ -13,26 +13,25 @@ echo "Inserting fixtures...\n";
 $database->exec('PRAGMA foreign_keys = ON');
 
 // Clear existing data
-$database->exec("DELETE FROM fleets_vehicules");
-$database->exec("DELETE FROM vehicules");
+$database->exec("DELETE FROM fleets_vehicles");
+$database->exec("DELETE FROM vehicles");
 $database->exec("DELETE FROM locations");
 $database->exec("DELETE FROM fleets");
 
 // Insert into fleets
-$database->exec("INSERT INTO fleets (id, name) VALUES (1, 'Fleet A'), (2, 'Fleet B')");
+$database->exec("INSERT INTO fleets (name) VALUES ('Fleet A'), (null)");
 
 // Insert into locations
-$database->exec("INSERT INTO locations (id, gpsCoordinates) VALUES (1, '48.8566,2.3522'), (2, '40.7128,-74.0060')");
+$database->exec("INSERT INTO locations (gps_coordinates, alt) VALUES ('48.8566,2.3522', null), ('40.7128,-74.0060', '15')");
 
-// Insert into vehicules
-$database->exec("INSERT INTO vehicules (id, location_id) VALUES (1, 1), (2, 2), (3, 1)");
+// Insert into vehicles
+$database->exec("INSERT INTO vehicles (plate_number) VALUES ('AX2-DI3'), ('B5Y-78D'), ('R3N-0LT')");
 
-// Insert fleet-vehicule relationships
-$database->exec("INSERT INTO fleets_vehicules (fleet_id, vehicule_id) VALUES (1, 1), (1, 3)");
+// Insert fleet-vehicle relationships
+$database->exec("INSERT INTO fleets_vehicles (fleet_id, vehicle_id) VALUES (1, 1), (1, 3)");
 
-// At this point:
-// - Vehicule 1 and 3 are in Fleet A
-// - Vehicule 2 is UNREGISTERED
+// Insert fleet-vehicle relationships
+$database->exec("INSERT INTO vehicles_locations (vehicle_id, location_id) VALUES (1, 1), (2, 2)");
 
 echo "Fixtures inserted successfully ✅\n";
 

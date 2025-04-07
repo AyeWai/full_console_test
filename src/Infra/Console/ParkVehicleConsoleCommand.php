@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Fulll\Infra\Console;
 
-use Fulll\App\Services\RegisterVehiculeService;
-use Fulll\Domain\Exceptions\VehiculeAlreadyRegisteredException;
-use Fulll\Domain\Models\Vehicule;
-use Symfony\Component\Console\Attribute\AsCommand;
+use Fulll\Domain\Models\Vehicle;
+use Fulll\App\Services\ParkVehicleService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Fulll\Domain\Exceptions\VehicleAlreadyRegisteredException;
 
 #[AsCommand(
-    name: 'fulll:register-vehicule',
-    description: 'Registers a vehicule to a fleet',
+    name: 'fulll:localize-vehicle',
+    description: 'Park a vehicle',
 )]
-final class RegisterVehiculeConsoleCommand extends Command
+final class ParkVehicleConsoleCommand extends Command
 {
     public function __construct(
-        private readonly RegisterVehiculeService $registerVehiculeService,
+        private readonly ParkVehicleService $ParkVehicleService,
     ) {
         parent::__construct();
     }
@@ -28,22 +28,22 @@ final class RegisterVehiculeConsoleCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Registers a vehicule into a fleet')
+            ->setDescription('Park a vehicule')
             ->addArgument('fleetId', InputArgument::REQUIRED, 'Fleet ID')
-            ->addArgument('vehiculePlateNumber', InputArgument::REQUIRED, 'Vehicule Plate Number');
+            ->addArgument('vehiclePlateNumber', InputArgument::REQUIRED, 'Vehicle Plate Number');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fleetId = (int) $input->getArgument('fleetId');
-        $vehiculePlateNumber = (int) $input->getArgument('vehiculePlateNumber');
-        $vehicule = new Vehicule($vehiculePlateNumber);
+        $vehiclePlateNumber = (int) $input->getArgument('vehiclePlateNumber');
+        $vehicle = new Vehicle($vehiclePlateNumber);
 
         try {
-            $this->registerVehiculeService->registerVehicule($vehicule, $fleetId);
-            $output->writeln('<info>✅ Vehicule successfully registered to the fleet.</info>');
+            $this->registerVehicleService->registerVehicle($vehicle, $fleetId);
+            $output->writeln('<info>✅ Vehicle successfully registered to the fleet.</info>');
             return Command::SUCCESS;
-        } catch (VehiculeAlreadyRegisteredException $e) {
+        } catch (VehicleAlreadyRegisteredException $e) {
             $output->writeln('<comment>⚠️  ' . $e->getMessage() . '</comment>');
             return Command::FAILURE;
         } catch (\Throwable $e) {
