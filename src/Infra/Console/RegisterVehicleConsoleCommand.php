@@ -37,17 +37,20 @@ final class RegisterVehicleConsoleCommand extends Command
     {
         $fleetId = (int) $input->getArgument('fleetId');
         $vehiclePlateNumber = (string) $input->getArgument('vehiclePlateNumber');
-        $vehicle = new Vehicle(id: null , plate_number : $vehiclePlateNumber);
+        $vehicle = new Vehicle(id: null, plate_number : $vehiclePlateNumber);
 
         try {
             $this->registerVehicleService->registerVehicle($vehicle, $fleetId);
             $output->writeln('<info>✅ Vehicle successfully registered to the fleet.</info>');
+
             return Command::SUCCESS;
         } catch (VehicleAlreadyRegisteredException $e) {
-            $output->writeln('<comment>⚠️  ' . $e->getMessage() . '</comment>');
+            $output->writeln('<comment>⚠️  '.$e->getMessage().'</comment>');
+
             return Command::FAILURE;
         } catch (\Throwable $e) {
-            $output->writeln('<error>❌ An unexpected error occurred: ' . $e->getMessage() . '</error>');
+            $output->writeln('<error>❌ An unexpected error occurred: '.$e->getMessage().'</error>');
+
             return Command::FAILURE;
         }
     }

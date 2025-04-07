@@ -10,8 +10,9 @@ use Fulll\Infra\Repositories\SqLiteVehicleRegistrationStatusRepository;
 final class IsVehicleRegisteredQuery
 {
     public function __construct(
-        private SqLiteVehicleRegistrationStatusRepository $sqLiteVehicleRegistrationStatusRepository
-    ) {}
+        private SqLiteVehicleRegistrationStatusRepository $sqLiteVehicleRegistrationStatusRepository,
+    ) {
+    }
 
     public function isVehicleRegistered(Vehicle $vehicle, int $fleet_id): bool
     {

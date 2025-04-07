@@ -8,5 +8,5 @@ use Fulll\Domain\Models\Vehicle;
 
 interface VehicleLocationRepositoryInterface
 {
-    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, null|string $alt): bool;
+    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, ?string $alt): bool;
 }

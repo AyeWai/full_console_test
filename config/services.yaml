@@ -32,7 +32,11 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # Register the command explicitly as a service
-    Fulll\Infra\Console\RegisterVehiculeConsoleCommand:
+    Fulll\Infra\Console\RegisterVehicleConsoleCommand:
         arguments:
-            $registerVehiculeService: '@Fulll\App\Services\RegisterVehiculeService'
+            $registerVehicleService: '@Fulll\App\Services\RegisterVehicleService'
+    
+    Fulll\Infra\Console\ParkVehicleConsoleCommand:
+        arguments:
+            $parkVehicleService: '@Fulll\App\Services\ParkVehicleService'
 

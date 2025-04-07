@@ -8,8 +8,9 @@ final class Vehicle
 {
     public function __construct(
         private ?int $id = null,
-        private string $plate_number
-    ) {}
+        private string $plate_number,
+    ) {
+    }
 
     public function getId(): int
     {

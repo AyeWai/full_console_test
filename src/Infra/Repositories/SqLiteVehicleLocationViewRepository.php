@@ -9,7 +9,7 @@ use Fulll\Domain\Repositories\VehicleLocationRepositoryInterface;
 
 final class SqLiteVehicleLocationViewRepository implements VehicleLocationRepositoryInterface
 {
-    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, null|string $alt): bool
+    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, ?string $alt): bool
     {
         try {
             $db = new \SQLite3($_ENV['DB_PATH']);
@@ -30,15 +30,17 @@ final class SqLiteVehicleLocationViewRepository implements VehicleLocationReposi
             $row = $result->fetchArray(SQLITE3_ASSOC);
             $result->finalize();
 
-            if ($row === false) {
+            if (false === $row) {
                 return false;
             }
         } catch (\Exception $e) {
-            echo "Error: " . $e->getMessage();
+            echo 'Error: '.$e->getMessage();
+
             return false;
         }
 
         $db->close();
+
         return true;
     }
 }

@@ -10,8 +10,9 @@ final class VehicleRegisteredEvent
 {
     public function __construct(
         private Vehicle $vehicle,
-        private int $fleet_id
-    ) {}
+        private int $fleet_id,
+    ) {
+    }
 
     public function getVehicle(): Vehicle
     {

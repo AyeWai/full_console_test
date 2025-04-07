@@ -10,10 +10,11 @@ use Fulll\Infra\Repositories\SqLiteVehicleLocationViewRepository;
 final class IsSameLocationQuery
 {
     public function __construct(
-        private SqLiteVehicleLocationViewRepository $sqLiteVehicleLocationViewRepository
-    ) {}
+        private SqLiteVehicleLocationViewRepository $sqLiteVehicleLocationViewRepository,
+    ) {
+    }
 
-    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, null|string $alt ): bool
+    public function isSameLocation(Vehicle $vehicle, string $gps_coordinates, ?string $alt): bool
     {
         return $this->sqLiteVehicleLocationViewRepository->isSameLocation(vehicle : $vehicle, gps_coordinates : $gps_coordinates, alt : $alt);
     }

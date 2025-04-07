@@ -8,6 +8,6 @@ final class VehicleAlreadyParkedAtThisLocationException extends \Exception
 {
     public function __construct()
     {
-        parent::__construct("Vehicle is already parked at this location.");
+        parent::__construct('Vehicle is already parked at this location.');
     }
 }

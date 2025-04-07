@@ -12,7 +12,6 @@ final class SqLiteVehicleRegistrationStatusRepository implements VehicleRegistra
     public function isVehicleRegistered(Vehicle $vehicle, int $fleet_id): bool
     {
         try {
-
             $db = new \SQLite3($_ENV['DB_PATH']);
 
             $pre_result = $db->prepare('SELECT * FROM vehicle_registration_status WHERE plate_number = ? AND associated_fleet = ? AND registration_status = "REGISTERED"');
@@ -23,15 +22,17 @@ final class SqLiteVehicleRegistrationStatusRepository implements VehicleRegistra
             $row = $result->fetchArray(SQLITE3_ASSOC);
             $result->finalize();
 
-            if ($row === false) {
+            if (false === $row) {
                 return false;
             }
         } catch (\Exception $e) {
-            echo "Error: " . $e->getMessage();
+            echo 'Error: '.$e->getMessage();
+
             return false;
         }
 
         $db->close();
+
         return true;
     }
 }

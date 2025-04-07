@@ -12,8 +12,9 @@ final class ParkVehicleCommand
         private Vehicle $vehicle,
         private int $fleet_id,
         private string $gpsCoordinates,
-        private ?string $alt = null
-    ) {}
+        private ?string $alt = null,
+    ) {
+    }
 
     public function getVehicle(): Vehicle
     {

@@ -4,25 +4,21 @@ declare(strict_types=1);
 
 namespace Fulll\App\Handlers;
 
-use Exception;
-use Fulll\Infra\Events\EventDispatcher;
 use Fulll\App\Commands\ParkVehicleCommand;
-use Fulll\Domain\Exception\VehicleAlreadyParkedAtThisLocationException;
-
+use Fulll\Infra\Repositories\SqLiteVehicleLocationRepository;
 
 final class ParkVehicleHandler
 {
-    public function __construct(private SqLiteVehicleLocationRepository $vehicleRepository) {}
+    public function __construct(
+        private SqLiteVehicleLocationRepository $sqLiteVehicleLocationRepository,
+    ) {
+    }
 
     public function handle(ParkVehicleCommand $command): void
     {
         $vehicle = $command->getVehicle();
-        $currentLocation = $this->vehicleRepository->getLocation($vehicle);
+        $fleet_id = $command->getFleetId();
 
-        if ($currentLocation === $command->gpsCoordinates) {
-            throw new VehicleAlreadyParkedAtThisLocationException();
-        }
-
-        $this->vehicleRepository->updateLocation($vehicle, $command->gpsCoordinates);
+        $this->sqLiteVehicleLocationRepository->updateVehiculeLocationTable(vehicle : $vehicle, fleet_id : $fleet_id);
     }
 }

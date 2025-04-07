@@ -6,10 +6,10 @@ namespace Fulll\Domain\Models;
 
 final class Location
 {
-
     public function __construct(
         private ?int $id = null,
         private string $gpsCoordinates,
         private ?string $alt = null,
-    ) {}
+    ) {
+    }
 }

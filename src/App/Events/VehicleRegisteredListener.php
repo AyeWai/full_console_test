@@ -10,8 +10,9 @@ use Fulll\Infra\Repositories\SqLiteFleetVehicleRepository;
 final class VehicleRegisteredListener
 {
     public function __construct(
-        private sqLiteFleetVehicleRepository $sqLiteFleetVehicleRepository
-    ) {}
+        private SqLiteFleetVehicleRepository $sqLiteFleetVehicleRepository,
+    ) {
+    }
 
     public function __invoke(VehicleRegisteredEvent $event): void
     {

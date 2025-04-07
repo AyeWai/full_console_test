@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Fulll\App\Services;
 
-use Fulll\Domain\Models\Vehicle;
 use Fulll\App\Commands\RegisterVehicleCommand;
 use Fulll\App\Handlers\RegisterVehicleHandler;
 use Fulll\App\Queries\IsVehicleRegisteredQuery;
 use Fulll\Domain\Exceptions\VehicleAlreadyRegisteredException;
+use Fulll\Domain\Models\Vehicle;
 
 final class RegisterVehicleService
 {
     public function __construct(
         private RegisterVehicleHandler $registerVehicleHandler,
         private IsVehicleRegisteredQuery $isVehicleRegisteredQuery,
-    ) {}
+    ) {
+    }
 
     public function registerVehicle(Vehicle $vehicle, int $fleet_id): void
     {
