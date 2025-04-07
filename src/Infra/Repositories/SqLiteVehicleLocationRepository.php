@@ -14,7 +14,7 @@ final class SqLiteVehicleLocationRepository
             $db = new \SQLite3($_ENV['DB_PATH']);
 
             $pre_result = $db->prepare(
-                'INSERT INTO vehicules_locations (vehicle_id, location_id)
+                'INSERT INTO vehicles_locations (vehicle_id, location_id)
                 VALUES (?, ?)'
             );
 

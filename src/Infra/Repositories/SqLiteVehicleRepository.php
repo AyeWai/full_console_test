@@ -9,7 +9,7 @@ class SqLiteVehicleRepository
         try {
             $db = new \SQLite3($_ENV['DB_PATH']);
 
-            $stmt = $this->db->prepare('SELECT id FROM vehicles WHERE plate_number = :plate');
+            $stmt = $db->prepare('SELECT id FROM vehicles WHERE plate_number = :plate');
             $stmt->bindValue(':plate', $plateNumber, SQLITE3_TEXT);
             $result = $stmt->execute();
 
