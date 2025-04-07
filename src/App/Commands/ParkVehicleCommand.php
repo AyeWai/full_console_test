@@ -6,12 +6,12 @@ namespace Fulll\App\Commands;
 
 namespace Fulll\App\Commands;
 
-use Fulll\Domain\Models\Vehicule;
+use Fulll\Domain\Models\Vehicle;
 
-final class ParkVehiculeCommand
+final class ParkVehicleCommand
 {
     public function __construct(
-        public Vehicule $vehicule,
+        public Vehicle $vehicle,
         public string $gpsCoordinates
     ) {}
 }

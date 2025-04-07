@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\Repositories;
 
-use Fulll\Domain\Models\Vehicule;
+use Fulll\Domain\Models\Vehicle;
 
-interface VehiculeRegistrationStatusRepositoryInterface
+interface VehicleRegistrationStatusRepositoryInterface
 {
-    public function isVehiculeRegistered(Vehicule $vehicule, int $fleet_id): bool;
+    public function isVehicleRegistered(Vehicle $vehicle, int $fleet_id): bool;
 }

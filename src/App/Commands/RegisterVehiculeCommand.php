@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Fulll\App\Commands;
 
-use Fulll\Domain\Models\Vehicule;
+use Fulll\Domain\Models\Vehicle;
 
-final class RegisterVehiculeCommand
+final class RegisterVehicleCommand
 {
     public function __construct(
-        private Vehicule $vehicule,
+        private Vehicle $vehicle,
         private int $fleet_id
     ) {}
 
-    public function getVehicule(): Vehicule
+    public function getVehicle(): Vehicle
     {
-        return $this->vehicule;
+        return $this->vehicle;
     }
 
-    public function setVehicule(Vehicule $vehicule): void
+    public function setVehicle(Vehicle $vehicle): void
     {
-        $this->vehicule = $vehicule;
+        $this->vehicle = $vehicle;
     }
 
     public function getFleetId(): int

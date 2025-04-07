@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\Events;
 
-use Fulll\Domain\Models\Vehicule;
+use Fulll\Domain\Models\Vehicle;
 
-final class VehiculeRegisteredEvent
+final class VehicleRegisteredEvent
 {
     public function __construct(
-        private Vehicule $vehicule,
+        private Vehicle $vehicle,
         private int $fleet_id
     ) {}
 
-    public function getVehicule(): Vehicule
+    public function getVehicle(): Vehicle
     {
-        return $this->vehicule;
+        return $this->vehicle;
     }
 
     public function getFleetId(): int

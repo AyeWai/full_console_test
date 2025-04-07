@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Fulll\App\Events;
 
-use Fulll\Domain\Events\VehiculeRegisteredEvent;
-use Fulll\Infra\Repositories\SqLiteFleetVehiculeRepository;
+use Fulll\Domain\Events\VehicleRegisteredEvent;
+use Fulll\Infra\Repositories\SqLiteFleetVehicleRepository;
 
-final class VehiculeRegisteredListener
+final class VehicleRegisteredListener
 {
     public function __construct(
-        private sqLiteFleetVehiculeRepository $sqLiteFleetVehiculeRepository
+        private sqLiteFleetVehicleRepository $sqLiteFleetVehicleRepository
     ) {}
 
-    public function __invoke(VehiculeRegisteredEvent $event): void
+    public function __invoke(VehicleRegisteredEvent $event): void
     {
-        $this->sqLiteFleetVehiculeRepository->updateFleetVehiculeTable(vehicule: $event->getVehicule(), fleet_id: $event->getFleetId());
+        $this->sqLiteFleetVehicleRepository->updateFleetVehicleTable(vehicle: $event->getVehicle(), fleet_id: $event->getFleetId());
     }
 }

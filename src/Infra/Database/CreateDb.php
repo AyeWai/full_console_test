@@ -13,7 +13,7 @@ if ($database) {
     )";
 
     $createLocationTableQuery = "CREATE TABLE IF NOT EXISTS locations (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         gpsCoordinates VARCHAR(20) NOT NULL
     )";
 

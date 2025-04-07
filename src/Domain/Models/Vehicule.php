@@ -4,30 +4,19 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\Models;
 
-final class Vehicule
+final class Vehicle
 {
     public function __construct(
-        private int $id,
-        private ?string $location_id = null
+        private string $plate_number
     ) {}
 
-    public function getId(): int
+    public function getPlateNumber(): ?string
     {
-        return $this->id;
+        return $this->plate_number;
     }
 
-    public function setId(int $id): void
+    public function setPlateNumber(?string $plate_number): void
     {
-        $this->id = $id;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location_id;
-    }
-
-    public function setLocation(?string $location): void
-    {
-        $this->location_id = $location;
+        $this->plate_number = $plate_number;
     }
 }

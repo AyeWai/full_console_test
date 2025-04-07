@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Fulll\App\Services;
 
-use Fulll\Domain\Models\Vehicule;
-use Fulll\App\Commands\RegisterVehiculeCommand;
-use Fulll\App\Handlers\RegisterVehiculeHandler;
-use Fulll\App\Queries\IsVehiculeRegisteredQuery;
-use Fulll\Domain\Exceptions\VehiculeAlreadyRegisteredException;
+use Fulll\Domain\Models\Vehicle;
+use Fulll\App\Commands\RegisterVehicleCommand;
+use Fulll\App\Handlers\RegisterVehicleHandler;
+use Fulll\App\Queries\IsVehicleRegisteredQuery;
+use Fulll\Domain\Exceptions\VehicleAlreadyRegisteredException;
 
-final class RegisterVehiculeService
+final class RegisterVehicleService
 {
     public function __construct(
-        private RegisterVehiculeHandler $registerVehiculeHandler,
-        private IsVehiculeRegisteredQuery $isVehiculeRegisteredQuery,
+        private RegisterVehicleHandler $registerVehicleHandler,
+        private IsVehicleRegisteredQuery $isVehicleRegisteredQuery,
     ) {}
 
-    public function registerVehicule(Vehicule $vehicule, int $fleet_id): void
+    public function registerVehicle(Vehicle $vehicle, int $fleet_id): void
     {
-        if ($this->isVehiculeRegisteredQuery->isVehiculeRegistered(vehicule: $vehicule, fleet_id: $fleet_id)) {
-            throw new VehiculeAlreadyRegisteredException();
+        if ($this->isVehicleRegisteredQuery->isVehicleRegistered(vehicle: $vehicle, fleet_id: $fleet_id)) {
+            throw new VehicleAlreadyRegisteredException();
         }
-        $this->registerVehiculeHandler->handle(new RegisterVehiculeCommand(vehicule: $vehicule, fleet_id: $fleet_id));
+        $this->registerVehicleHandler->handle(new RegisterVehicleCommand(vehicle: $vehicle, fleet_id: $fleet_id));
     }
 }

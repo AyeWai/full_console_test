@@ -1,0 +1,92 @@
+<?php
+
+use Fulll\Domain\Models\Fleet;
+use Behat\Behat\Context\Context;
+use Fulll\Domain\Models\Vehicle;
+use Fulll\Infra\Events\EventDispatcher;
+use Fulll\App\Commands\RegisterVehicleCommand;
+use Fulll\App\Handlers\RegisterVehicleHandler;
+use Fulll\App\Queries\IsVehicleRegisteredQuery;
+use Fulll\Infra\Repositories\SqLiteFleetVehicleRepository;
+use Fulll\Infra\Repositories\SqLiteVehicleRegistrationStatusRepository;
+
+class FeatureContext implements Context
+{
+    public function __construct(
+        private SqLiteVehicleRegistrationStatusRepository $sqLiteVehicleRegistrationStatusRepository,
+        private SqLiteFleetVehicleRepository $sqLiteFleetVehicleRepository,
+        private EventDispatcher $eventDispatcher,
+        private RegisterVehicleHandler $registerVehicleHandler,
+        private Fleet $fleet,
+        private Vehicle $vehicule,
+        private RegisterVehicleCommand $registerVehicleCommand,
+        private IsVehicleRegisteredQuery $isVehicleRegisteredQuery
+
+    ) {}
+
+    #[Given('my fleet :fleetId')]
+    public function iHaveAFleetWithId($fleetId)
+    {
+        $this->fleet->setId($fleetId);
+    }
+
+    #[Given('a vehicule :vehiculeId')]
+    public function iHaveAVehicleWithId($vehiculeId)
+    {
+        $this->vehicule->setId(id: $vehiculeId);
+    }
+
+    #[When('I have registered this vehicle into my fleet')]
+    public function iRegisterTheVehicle()
+    {
+        $this->registerVehicleCommand = new RegisterVehicleCommand(vehicule: $this->vehicule, fleet_id: $this->fleet->getId());
+        $this->registerVehicleHandler->handle($this->registerVehicleCommand);
+    }
+
+    #[Then('this vehicle should be part of my vehicle fleet')]
+    public function myVehicleIsPartOfMyFleet()
+    {
+        $this->isVehicleRegisteredQuery->isVehicleRegistered($this->vehicule);
+    }
+
+    #[Given('a location ":location"')]
+    public function iHaveaLocation(string $location)
+    {
+        $this->location = $location;
+    }
+
+    #[When('I park my vehicle at this location')]
+    public function iParkMyVehicle()
+    {
+        $this->parkVehicleCommand = new ParkVehicleCommand($this->vehicule, $this->location);
+        $this->parkVehicleHandler->handle($this->parkVehicleCommand);
+    }
+
+    #[Then('the known location of my vehicle should verify this location')]
+    public function assertVehicleIsAtLocation()
+    {
+        $storedLocation = $this->vehiculeRepository->getLocation($this->vehicule);
+        if ($storedLocation !== $this->location) {
+            throw new \Exception("Vehicle location does not match expected location.");
+        }
+    }
+
+    #[When('I try to park my vehicle at this location')]
+    public function iTryToParkAgain()
+    {
+        try {
+            $this->parkVehicleCommand = new ParkVehicleCommand($this->vehicule, $this->location);
+            $this->parkVehicleHandler->handle($this->parkVehicleCommand);
+        } catch (VehicleAlreadyParkedAtThisLocationException $e) {
+            $this->lastException = $e;
+        }
+    }
+
+    #[Then('I should be informed that my vehicle is already parked at this location')]
+    public function assertAlreadyParkedMessage()
+    {
+        if (!$this->lastException instanceof VehicleAlreadyParkedAtThisLocationException) {
+            throw new \Exception("Expected VehicleAlreadyParkedAtThisLocationException was not thrown.");
+        }
+    }
+}

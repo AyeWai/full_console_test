@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Fulll\App\Queries;
 
-use Fulll\Domain\Models\Vehicule;
-use Fulll\Infra\Repositories\SqLiteVehiculeRegistrationStatusRepository;
+use Fulll\Domain\Models\Vehicle;
+use Fulll\Infra\Repositories\SqLiteVehicleRegistrationStatusRepository;
 
-final class IsVehiculeRegisteredQuery
+final class IsVehicleRegisteredQuery
 {
     public function __construct(
-        private SqLiteVehiculeRegistrationStatusRepository $sqLiteVehiculeRegistrationStatusRepository
+        private SqLiteVehicleRegistrationStatusRepository $sqLiteVehicleRegistrationStatusRepository
     ) {}
 
-    public function isVehiculeRegistered(Vehicule $vehicule, int $fleet_id): bool
+    public function isVehicleRegistered(Vehicle $vehicle, int $fleet_id): bool
     {
-        return $this->sqLiteVehiculeRegistrationStatusRepository->isVehiculeRegistered(vehicule: $vehicule, fleet_id: $fleet_id);
+        return $this->sqLiteVehicleRegistrationStatusRepository->isVehicleRegistered(vehicle: $vehicle, fleet_id: $fleet_id);
     }
 }
