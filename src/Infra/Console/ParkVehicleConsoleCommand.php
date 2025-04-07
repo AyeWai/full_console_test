@@ -46,6 +46,7 @@ final class ParkVehicleConsoleCommand extends Command
         $alt = (string) $input->getArgument('alt') ?? null;
         $vehicle_id = $this->sqLiteVehicleRepository->findIdByPlateNumber(plateNumber : $vehiclePlateNumber);
         $location_id = $this->sqLiteLocationRepository->findIdByGpsCoordinates(gps_coordinates : $lat_lng);
+        
         if (null === $vehicle_id) {
             throw new \Exception('THe vehicle does not exist');
         }

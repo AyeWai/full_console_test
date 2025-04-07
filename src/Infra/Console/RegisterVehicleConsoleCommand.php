@@ -7,6 +7,7 @@ namespace Fulll\Infra\Console;
 use Fulll\App\Services\RegisterVehicleService;
 use Fulll\Domain\Exceptions\VehicleAlreadyRegisteredException;
 use Fulll\Domain\Models\Vehicle;
+use Fulll\Infra\Repositories\SqLiteVehicleRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,6 +22,7 @@ final class RegisterVehicleConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehicleService $registerVehicleService,
+        private SqLiteVehicleRepository $sqLiteVehicleRepository
     ) {
         parent::__construct();
     }
@@ -37,7 +39,8 @@ final class RegisterVehicleConsoleCommand extends Command
     {
         $fleetId = (int) $input->getArgument('fleetId');
         $vehiclePlateNumber = (string) $input->getArgument('vehiclePlateNumber');
-        $vehicle = new Vehicle(id: null, plate_number : $vehiclePlateNumber);
+        $vehicle_id = $this->sqLiteVehicleRepository->findIdByPlateNumber(plateNumber : $vehiclePlateNumber);
+        $vehicle = new Vehicle(id: $vehicle_id, plate_number : $vehiclePlateNumber);
 
         try {
             $this->registerVehicleService->registerVehicle($vehicle, $fleetId);

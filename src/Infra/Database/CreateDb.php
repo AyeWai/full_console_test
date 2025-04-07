@@ -25,15 +25,15 @@ if ($database) {
 
     $createFleetVehicleTableQuery = 'CREATE TABLE IF NOT EXISTS fleets_vehicles (
         fleet_id INTEGER NOT NULL,
-        vehicle_id INTEGER NOT NULL,
+        vehicle_id INTEGER Not NULL,
         PRIMARY KEY (vehicle_id, fleet_id),
         FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE
         FOREIGN KEY (fleet_id) REFERENCES fleets(id) ON DELETE CASCADE
     )';
 
     $createVehicleLocationTableQuery = 'CREATE TABLE IF NOT EXISTS vehicles_locations (
-        vehicle_id INTEGER NOT NULL,
-        location_id INTEGER NOT NULL,
+        vehicle_id INTEGER,
+        location_id INTEGER,
         PRIMARY KEY(vehicle_id),
         FOREIGN KEY(vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE,
         FOREIGN KEY(location_id) REFERENCES locations(id) ON DELETE CASCADE

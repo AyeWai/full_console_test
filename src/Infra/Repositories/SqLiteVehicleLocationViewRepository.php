@@ -16,11 +16,11 @@ final class SqLiteVehicleLocationViewRepository implements VehicleLocationReposi
 
             $pre_result = $db->prepare(
                 'SELECT * FROM vehicle_location_view
-                WHERE plate_numer = ?
+                WHERE plate_number = ?
                 AND gps_coordinates = ?
                 AND alt = ?'
             );
-
+            
             $pre_result->bindValue(1, $vehicle->getPlateNumber(), SQLITE3_TEXT);
             $pre_result->bindValue(2, $gps_coordinates, SQLITE3_TEXT);
             $pre_result->bindValue(3, $alt, SQLITE3_TEXT);

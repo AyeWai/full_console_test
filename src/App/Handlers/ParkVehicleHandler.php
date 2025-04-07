@@ -17,6 +17,7 @@ final class ParkVehicleHandler
     public function handle(ParkVehicleCommand $command): void
     {
         $vehicle = $command->getVehicle();
+        $location_id = $command->getLocationId();
 
         $this->sqLiteVehicleLocationRepository->updateVehiculeLocationTable(vehicle : $vehicle, location_id : $location_id);
     }

@@ -19,7 +19,7 @@ final class SqLiteVehicleLocationRepository
             );
 
             $pre_result->bindValue(1, $vehicle->getId(), SQLITE3_INTEGER);
-            $pre_result->bindValue(1, $location_id, SQLITE3_INTEGER);
+            $pre_result->bindValue(2, $location_id, SQLITE3_INTEGER);
             $pre_result->execute();
         } catch (\Exception $e) {
             echo 'Error: '.$e->getMessage();
