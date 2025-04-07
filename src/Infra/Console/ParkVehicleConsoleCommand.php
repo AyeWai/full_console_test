@@ -29,7 +29,7 @@ final class ParkVehicleConsoleCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Park a vehicule')
+            ->setDescription('Park a vehicle')
             ->addArgument('fleetId', InputArgument::REQUIRED, 'Fleet ID')
             ->addArgument('vehiclePlateNumber', InputArgument::REQUIRED, 'Vehicle Plate Number')
             ->addArgument('lat lng', InputArgument::REQUIRED, 'GPS coordinates')

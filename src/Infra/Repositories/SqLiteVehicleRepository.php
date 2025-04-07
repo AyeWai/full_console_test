@@ -2,7 +2,7 @@
 
 namespace Fulll\Infra\Repositories;
 
-class SqLiteVehiculeRepository
+class SqLiteVehicleRepository
 {
     public function findIdByPlateNumber(string $plateNumber): ?int
     {
