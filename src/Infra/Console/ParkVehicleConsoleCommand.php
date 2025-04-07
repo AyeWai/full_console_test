@@ -6,7 +6,7 @@ namespace Fulll\Infra\Console;
 
 use Fulll\App\Services\ParkVehicleService;
 use Fulll\Domain\Models\Vehicle;
-use Fulll\Infra\Repositories\SqLiteVehiculeRepository;
+use Fulll\Infra\Repositories\SqLiteVehicleRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,7 +21,7 @@ final class ParkVehicleConsoleCommand extends Command
 {
     public function __construct(
         private readonly ParkVehicleService $parkVehicleService,
-        private SqLiteVehiculeRepository $sqLiteVehiculeRepository,
+        private SqLiteVehicleRepository $sqLiteVehicleRepository,
     ) {
         parent::__construct();
     }
