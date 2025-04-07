@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Fulll\Infra\Console;
 
-use Fulll\App\Services\ParkVehicleService;
 use Fulll\Domain\Models\Vehicle;
-use Fulll\Infra\Repositories\SqLiteVehicleRepository;
-use Symfony\Component\Console\Attribute\AsCommand;
+use Fulll\App\Services\ParkVehicleService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Fulll\Infra\Repositories\SqLiteVehicleRepository;
 use Symfony\Component\Console\Output\OutputInterface;
+use Fulll\Infra\Repositories\SqLiteLocationRepository;
 
 #[AsCommand(
     name: 'fulll:localize-vehicle',
@@ -22,6 +23,7 @@ final class ParkVehicleConsoleCommand extends Command
     public function __construct(
         private readonly ParkVehicleService $parkVehicleService,
         private SqLiteVehicleRepository $sqLiteVehicleRepository,
+        private SqLiteLocationRepository $sqLiteLocationRepository,
     ) {
         parent::__construct();
     }
@@ -43,13 +45,17 @@ final class ParkVehicleConsoleCommand extends Command
         $lat_lng = (string) $input->getArgument('lat lng');
         $alt = (string) $input->getArgument('alt') ?? null;
         $vehicle_id = $this->sqLiteVehicleRepository->findIdByPlateNumber(plateNumber : $vehiclePlateNumber);
+        $location_id = $this->sqLiteLocationRepository->findIdByGpsCoordinates(gps_coordinates : $lat_lng);
         if (null === $vehicle_id) {
             throw new \Exception('THe vehicle does not exist');
+        }
+        if (null === $location_id) {
+            throw new \Exception('The location does not exist');
         }
         $vehicle = new Vehicle(id : $vehicle_id, plate_number : $vehiclePlateNumber);
 
         try {
-            $this->parkVehicleService->parkVehicle(vehicle : $vehicle, fleet_id : $fleetId, gps_coordinates : $lat_lng, alt : $alt);
+            $this->parkVehicleService->parkVehicle(vehicle : $vehicle, fleet_id : $fleetId, location_id : $location_id, gps_coordinates : $lat_lng, alt : $alt);
             $output->writeln('<info>✅ Vehicle successfully parked.</info>');
 
             return Command::SUCCESS;

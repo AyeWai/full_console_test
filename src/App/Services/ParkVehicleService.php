@@ -20,11 +20,11 @@ final class ParkVehicleService
     ) {
     }
 
-    public function parkVehicle(Vehicle $vehicle, int $fleet_id, string $gps_coordinates, ?string $alt): void
+    public function parkVehicle(Vehicle $vehicle, int $fleet_id, int $location_id, string $gps_coordinates, ?string $alt): void
     {
         if ($this->isSameLocationQuery->isSameLocation(vehicle : $vehicle, gps_coordinates : $gps_coordinates, alt: $alt)) {
             throw new VehicleAlreadyParkedAtThisLocationException();
         }
-        $this->parkVehicleHandler->handle(new ParkVehicleCommand(vehicle : $vehicle, fleet_id : $fleet_id, gpsCoordinates : $gps_coordinates, alt : $alt));
+        $this->parkVehicleHandler->handle(new ParkVehicleCommand(vehicle : $vehicle, fleet_id : $fleet_id, location_id: $location_id, gpsCoordinates : $gps_coordinates, alt : $alt));
     }
 }

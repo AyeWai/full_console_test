@@ -15,7 +15,7 @@ final class SqLiteVehicleLocationViewRepository implements VehicleLocationReposi
             $db = new \SQLite3($_ENV['DB_PATH']);
 
             $pre_result = $db->prepare(
-                'SELECT * FROM vehicle _location_view
+                'SELECT * FROM vehicle_location_view
                 WHERE plate_numer = ?
                 AND gps_coordinates = ?
                 AND alt = ?'

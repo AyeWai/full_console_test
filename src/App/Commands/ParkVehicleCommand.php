@@ -11,6 +11,7 @@ final class ParkVehicleCommand
     public function __construct(
         private Vehicle $vehicle,
         private int $fleet_id,
+        private int $location_id,
         private string $gpsCoordinates,
         private ?string $alt = null,
     ) {
@@ -34,5 +35,36 @@ final class ParkVehicleCommand
     public function setFleetId(int $fleet_id): void
     {
         $this->fleet_id = $fleet_id;
+    }
+
+    public function getLocationId(): int
+    {
+        return $this->location_id;
+    }
+
+    public function setLocationId(int $location_id): void
+    {
+        $this->location_id = $location_id;
+    }
+    
+
+    public function getGpsCoordinates(): string
+    {
+        return $this->gpsCoordinates;
+    }
+
+    public function setGpsCoordinates(string $gpsCoordinates): void
+    {
+        $this->gpsCoordinates = $gpsCoordinates;
+    }
+
+    public function getAlt(): string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(string $alt): void
+    {
+        $this->alt = $alt;
     }
 }
