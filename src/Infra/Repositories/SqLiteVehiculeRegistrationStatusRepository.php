@@ -12,8 +12,9 @@ class SqLiteVehiculeRegistrationStatusRepository implements VehiculeRegistration
     public function isVehiculeRegistered(Vehicule $vehicule, int $fleet_id): bool
     {
         try {
-            $db = new \SQLite3('src/Infra/my_database.db');
 
+            $db = new \SQLite3($_ENV['DB_PATH']);
+            
             $pre_result = $db->prepare('SELECT * FROM vehicule_registration_status WHERE vehicule_id = ? AND associated_fleet = ? AND registration_status = "REGISTERED"');
             $pre_result->bindValue(1, $vehicule->getId(), SQLITE3_INTEGER);
             $pre_result->bindValue(2, $fleet_id, SQLITE3_INTEGER);

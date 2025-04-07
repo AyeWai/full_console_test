@@ -8,17 +8,17 @@ if ($database) {
     $database->exec('PRAGMA foreign_keys = ON');
 
     $createFleetTableQuery = "CREATE TABLE IF NOT EXISTS fleets (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name VARCHAR(45)
     )";
 
     $createLocationTableQuery = "CREATE TABLE IF NOT EXISTS locations (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         gpsCoordinates VARCHAR(20) NOT NULL
     )";
 
     $createVehiculeTableQuery = "CREATE TABLE IF NOT EXISTS vehicules (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         location_id INTEGER,
         FOREIGN KEY (location_id) REFERENCES locations(id)
     )";
@@ -33,7 +33,7 @@ if ($database) {
 
     $createVehiculeRegistrationStatusViewQuery = "CREATE VIEW vehicule_registration_status AS
         SELECT 
-            v.id,
+            v.id AS vehicule_id,
             CASE 
                 WHEN f.fleet_id IS NULL THEN 'UNREGISTERED'
                 ELSE 'REGISTERED'

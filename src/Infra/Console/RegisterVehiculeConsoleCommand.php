@@ -6,6 +6,7 @@ namespace Fulll\Infra\Console;
 
 use Fulll\App\Services\RegisterVehiculeService;
 use Fulll\Domain\Exception\VehiculeAlreadyRegisteredException;
+use Fulll\Domain\Models\Vehicule;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RegisterVehiculeConsoleCommand extends Command
 {
     public function __construct(
-        private readonly RegisterVehiculeService $registerVehiculeService
+        private readonly RegisterVehiculeService $registerVehiculeService,
     ) {
         parent::__construct();
     }
@@ -29,23 +30,21 @@ class RegisterVehiculeConsoleCommand extends Command
         $this
             ->setDescription('Registers a vehicule into a fleet')
             ->addArgument('fleetId', InputArgument::REQUIRED, 'Fleet ID')
-            ->addArgument('vehiculeId', InputArgument::REQUIRED, 'Vehicule ID');
+            ->addArgument('vehiculePlateNumber', InputArgument::REQUIRED, 'Vehicule Plate Number');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fleetId = (int) $input->getArgument('fleetId');
-        $vehiculeId = (int) $input->getArgument('vehiculeId');
+        $vehiculePlateNumber = (int) $input->getArgument('vehiculePlateNumber');
+        $vehicule = new Vehicule($vehiculePlateNumber);
 
         try {
-            $this->registerVehiculeService->register($fleetId, $vehiculeId);
+            $this->registerVehiculeService->registerVehicule($vehicule, $fleetId);
             $output->writeln('<info>✅ Vehicule successfully registered to the fleet.</info>');
             return Command::SUCCESS;
         } catch (VehiculeAlreadyRegisteredException $e) {
             $output->writeln('<comment>⚠️  ' . $e->getMessage() . '</comment>');
-            return Command::FAILURE;
-        } catch (VehiculeNotFoundException $e) {
-            $output->writeln('<error>❌  ' . $e->getMessage() . '</error>');
             return Command::FAILURE;
         } catch (\Throwable $e) {
             $output->writeln('<error>❌ An unexpected error occurred: ' . $e->getMessage() . '</error>');

@@ -12,7 +12,8 @@ class SqLiteFleetVehiculeRepository implements FleetVehiculeRepositoryInterface
     public function updateFleetVehiculeTable(Vehicule $vehicule, int $fleet_id): bool
     {
         try {
-            $db = new \SQLite3('src/Infra/my_database.db');
+            $db = new \SQLite3($_ENV['DB_PATH']);
+
             $pre_result = $db->prepare(
                 'INSERT INTO fleets_vehicules (fleet_id, vehicule_id)
                 VALUES (?, ?)'
@@ -24,6 +25,7 @@ class SqLiteFleetVehiculeRepository implements FleetVehiculeRepositoryInterface
             echo "Error: " . $e->getMessage();
             return false;
         }
+        
         $db->close();
         return true;
     }

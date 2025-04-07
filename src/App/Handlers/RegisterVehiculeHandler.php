@@ -14,7 +14,7 @@ final class RegisterVehiculeHandler
 {
     public function __construct(
         private SqLiteFleetVehiculeRepository $sqLiteFleetVehiculeRepository,
-        private EventDispatcher $v
+        private EventDispatcher $eventDispatcher
     ) {}
 
     public function handle(RegisterVehiculeCommand $command): void
@@ -23,8 +23,8 @@ final class RegisterVehiculeHandler
         $fleet_id = $command->getFleetId();
 
         try {
-            $this->sqLiteFleetVehiculeRepository->registerOneVehicule(vehicule: $vehicule);
-            $event = new VehiculeRegisteredEvent(vehicule: $vehicule, fleet_id: $fleet_id);
+            $this->sqLiteFleetVehiculeRepository->updateFleetVehiculeTable(vehicule : $vehicule, fleet_id : $fleet_id);
+            $event = new VehiculeRegisteredEvent(vehicule : $vehicule, fleet_id : $fleet_id);
             $this->eventDispatcher->dispatch($event);
         } catch (Exception $e) {
             throw new \Exception("Something went wrong in the vehicule registration process");
