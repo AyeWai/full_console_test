@@ -46,7 +46,6 @@ final class ParkVehicleCommand
     {
         $this->location_id = $location_id;
     }
-    
 
     public function getGpsCoordinates(): string
     {

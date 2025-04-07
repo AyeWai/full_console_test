@@ -20,7 +20,7 @@ final class SqLiteVehicleLocationViewRepository implements VehicleLocationReposi
                 AND gps_coordinates = ?
                 AND alt = ?'
             );
-            
+
             $pre_result->bindValue(1, $vehicle->getPlateNumber(), SQLITE3_TEXT);
             $pre_result->bindValue(2, $gps_coordinates, SQLITE3_TEXT);
             $pre_result->bindValue(3, $alt, SQLITE3_TEXT);

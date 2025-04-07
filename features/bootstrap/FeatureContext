@@ -1,5 +1,7 @@
 <?php
 
+use Behat\Step\Then;
+use Behat\Step\Given;
 use Fulll\Domain\Models\Fleet;
 use Behat\Behat\Context\Context;
 use Fulll\Domain\Models\Vehicle;

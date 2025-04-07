@@ -22,7 +22,7 @@ final class RegisterVehicleConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehicleService $registerVehicleService,
-        private SqLiteVehicleRepository $sqLiteVehicleRepository
+        private SqLiteVehicleRepository $sqLiteVehicleRepository,
     ) {
         parent::__construct();
     }

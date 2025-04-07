@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Fulll\Infra\Console;
 
-use Fulll\Domain\Models\Vehicle;
 use Fulll\App\Services\ParkVehicleService;
-use Symfony\Component\Console\Command\Command;
+use Fulll\Domain\Models\Vehicle;
+use Fulll\Infra\Repositories\SqLiteLocationRepository;
+use Fulll\Infra\Repositories\SqLiteVehicleRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Fulll\Infra\Repositories\SqLiteVehicleRepository;
 use Symfony\Component\Console\Output\OutputInterface;
-use Fulll\Infra\Repositories\SqLiteLocationRepository;
 
 #[AsCommand(
     name: 'fulll:localize-vehicle',
@@ -46,7 +46,7 @@ final class ParkVehicleConsoleCommand extends Command
         $alt = (string) $input->getArgument('alt') ?? null;
         $vehicle_id = $this->sqLiteVehicleRepository->findIdByPlateNumber(plateNumber : $vehiclePlateNumber);
         $location_id = $this->sqLiteLocationRepository->findIdByGpsCoordinates(gps_coordinates : $lat_lng);
-        
+
         if (null === $vehicle_id) {
             throw new \Exception('THe vehicle does not exist');
         }
