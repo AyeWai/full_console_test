@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\Exception;
 
-class VehicleAlreadyParkedAtThisLocationException extends \Exception
+final class VehicleAlreadyParkedAtThisLocationException extends \Exception
 {
     public function __construct()
     {

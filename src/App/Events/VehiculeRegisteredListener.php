@@ -7,7 +7,7 @@ namespace Fulll\App\Events;
 use Fulll\Domain\Events\VehiculeRegisteredEvent;
 use Fulll\Infra\Repositories\SqLiteFleetVehiculeRepository;
 
-class VehiculeRegisteredListener
+final class VehiculeRegisteredListener
 {
     public function __construct(
         private sqLiteFleetVehiculeRepository $sqLiteFleetVehiculeRepository

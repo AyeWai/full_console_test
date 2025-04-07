@@ -2,7 +2,7 @@
 
 namespace Fulll\Infra\Events;
 
-class EventDispatcher
+final class EventDispatcher
 {
     private array $listeners = [];
 

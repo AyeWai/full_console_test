@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'fulll:register-vehicule',
     description: 'Registers a vehicule to a fleet',
 )]
-class RegisterVehiculeConsoleCommand extends Command
+final class RegisterVehiculeConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehiculeService $registerVehiculeService,

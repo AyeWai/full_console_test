@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'fulll:localize-vehicle',
     description: 'Park a vehicle',
 )]
-class LocalizeVehiculeConsoleCommand extends Command
+final class LocalizeVehiculeConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehiculeService $registerVehiculeService,

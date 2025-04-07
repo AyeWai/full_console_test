@@ -7,7 +7,7 @@ namespace Fulll\Infra\Repositories;
 use Fulll\Domain\Models\Vehicule;
 use Fulll\Domain\Repositories\FleetVehiculeRepositoryInterface;
 
-class SqLiteFleetVehiculeRepository implements FleetVehiculeRepositoryInterface
+final class SqLiteFleetVehiculeRepository implements FleetVehiculeRepositoryInterface
 {
     public function updateFleetVehiculeTable(Vehicule $vehicule, int $fleet_id): bool
     {
@@ -25,7 +25,7 @@ class SqLiteFleetVehiculeRepository implements FleetVehiculeRepositoryInterface
             echo "Error: " . $e->getMessage();
             return false;
         }
-        
+
         $db->close();
         return true;
     }
