@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Domain\Exception;
+namespace Fulll\Domain\Exceptions;
 
 final class VehiculeAlreadyRegisteredException extends DomainException
 {

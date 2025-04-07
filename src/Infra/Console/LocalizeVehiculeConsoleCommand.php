@@ -14,10 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'fulll:register-vehicule',
-    description: 'Registers a vehicule to a fleet',
+    name: 'fulll:localize-vehicle',
+    description: 'Park a vehicle',
 )]
-class RegisterVehiculeConsoleCommand extends Command
+class LocalizeVehiculeConsoleCommand extends Command
 {
     public function __construct(
         private readonly RegisterVehiculeService $registerVehiculeService,

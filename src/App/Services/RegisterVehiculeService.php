@@ -8,7 +8,7 @@ use Fulll\Domain\Models\Vehicule;
 use Fulll\App\Commands\RegisterVehiculeCommand;
 use Fulll\App\Handlers\RegisterVehiculeHandler;
 use Fulll\App\Queries\IsVehiculeRegisteredQuery;
-use Fulll\Domain\Exception\VehiculeAlreadyRegisteredException;
+use Fulll\Domain\Exceptions\VehiculeAlreadyRegisteredException;
 
 final class RegisterVehiculeService
 {
