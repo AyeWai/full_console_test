@@ -19,6 +19,6 @@ final class ParkVehicleHandler
         $vehicle = $command->getVehicle();
         $location_id = $command->getLocationId();
 
-        $this->sqLiteVehicleLocationRepository->updateVehiculeLocationTable(vehicle : $vehicle, location_id : $location_id);
+        $this->sqLiteVehicleLocationRepository->updateVehicleLocationTable(vehicle : $vehicle, location_id : $location_id);
     }
 }

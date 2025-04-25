@@ -8,7 +8,7 @@ use Fulll\Domain\Models\Vehicle;
 
 final class SqLiteVehicleLocationRepository
 {
-    public function updateVehiculeLocationTable(Vehicle $vehicle, int $location_id): bool
+    public function updateVehicleLocationTable(Vehicle $vehicle, int $location_id): bool
     {
         try {
             $db = new \SQLite3($_ENV['DB_PATH']);

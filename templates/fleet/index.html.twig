@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fleet index{% endblock %}
+
+{% block body %}
+    <h1>Fleet index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fleet in fleets %}
+            <tr>
+                <td>{{ fleet.id }}</td>
+                <td>{{ fleet.label }}</td>
+                <td>
+                    <a href="{{ path('app_fleet_show', {'id': fleet.id}) }}">show</a>
+                    <a href="{{ path('app_fleet_edit', {'id': fleet.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fleet_new') }}">Create new</a>
+{% endblock %}

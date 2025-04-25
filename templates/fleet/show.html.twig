@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fleet{% endblock %}
+
+{% block body %}
+    <h1>Fleet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fleet.id }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ fleet.label }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fleet_index') }}">back to list</a>
+
+    <a href="{{ path('app_fleet_edit', {'id': fleet.id}) }}">edit</a>
+
+    {{ include('fleet/_delete_form.html.twig') }}
+{% endblock %}
