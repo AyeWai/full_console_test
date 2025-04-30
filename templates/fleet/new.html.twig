@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New Fleet{% endblock %}
-
-{% block body %}
-    <h1>Create new Fleet</h1>
-
-    {{ include('fleet/_form.html.twig') }}
-
-    <a href="{{ path('app_fleet_index') }}">back to list</a>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Vue + Vuetify in Symfony</title>
+		{{ encore_entry_link_tags('app_fleet') }}
+	</head>
+</html></body><body>
+<div id="app_fleet"></div>
+{{ encore_entry_script_tags('app_fleet') }}
+<a href="{{ path('app_fleet_index') }}">back to list</a></body></html>

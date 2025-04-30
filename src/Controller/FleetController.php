@@ -30,8 +30,6 @@ final class FleetController extends AbstractController
         $form = $this->createForm(Fleet2Type::class, $fleet);
         $form->handleRequest($request);
 
-        $vehicles = $fleetRepository->findAll();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($fleet);
             $entityManager->flush();
@@ -39,11 +37,11 @@ final class FleetController extends AbstractController
             return $this->redirectToRoute('app_fleet_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // return $this->render('fleet/new.html.twig', [
-        //     'fleet' => $fleet,
-        //     'form' => $form,
-        // ]);
-        return new JsonResponse([$vehicles]);
+        return $this->render('fleet/new.html.twig', [
+            'fleet' => $fleet,
+            'form' => $form,
+        ]);
+        // return new JsonResponse([$vehicles]);
     }
 
     #[Route('/{id}', name: 'app_fleet_show', methods: ['GET'])]

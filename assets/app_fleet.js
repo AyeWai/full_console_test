@@ -1,7 +1,7 @@
 /*
  * Welcome to your app's main JavaScript file!
  *
-* We recommend including the built version of this JavaScript file
+ * We recommend including the built version of this JavaScript file
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
@@ -9,7 +9,7 @@
 //import './styles/app.css';
 
 import { createApp } from 'vue';
-import App from './pages/App.vue';
+import Fleet from './components/Fleet.vue';
 
 // Vuetify setup
 import 'vuetify/styles'
@@ -18,7 +18,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 const vuetify = createVuetify({ components, directives })
-
-createApp(App)
+  
+createApp(Fleet)
   .use(vuetify)
-  .mount('#app');
+  .mount('#app_fleet');
+
