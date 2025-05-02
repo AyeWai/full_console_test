@@ -11,15 +11,7 @@
       item-value="name"
       @update:options="loadItems"
     ></v-data-table-server>
-    <v-text-field v-model="form.plateNumber" label="Add Plate Number" />
-    <v-text-field v-model="form.brand" label="Add Brand" />
   </v-col>
-  <v-btn
-    class="mt-2"
-    text="Submit"
-    @click.prevent="sendVehicleForm"
-    block
-  ></v-btn>
 </template>
 
 <script setup>

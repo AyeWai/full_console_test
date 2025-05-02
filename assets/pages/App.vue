@@ -3,6 +3,7 @@ import { ref } from "vue";
 import axios from "axios";
 import Vehicle from "../components/Vehicle.vue";
 import Fleet from "../components/Fleet.vue";
+import DialogueVehicle from "../components/DialogueVehicle.vue";
 
 const form = ref({
   label: "",
@@ -32,10 +33,12 @@ async function sendVehicleForm() {
           <v-tabs-window v-model="tab">
             <v-tabs-window-item value="vehicle">
               <Vehicle />
+              <DialogueVehicle />
             </v-tabs-window-item>
 
             <v-tabs-window-item value="fleet">
               <Fleet />
+              <Dialogue />
             </v-tabs-window-item>
           </v-tabs-window>
         </v-card-text>
